@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from live_reddit_improved_classifier import LiveRedditImprovedClassifier
 import time
+import argparse
 
 class InteractiveDemo:
     """Interactive demo for live Reddit classification."""
@@ -22,7 +23,7 @@ class InteractiveDemo:
         print("Natural Language Processing Final Project")
         print("=" * 60)
     
-    def load_or_train_model(self):
+    def load_or_train_model(self, quick_mode=False):
         """Load existing model or train new one."""
         
         print("\n1. MODEL SETUP")
@@ -34,7 +35,12 @@ class InteractiveDemo:
             print("Reddit API not available - demo mode limited")
             return False
         
-        choice = input("\nOptions:\n[1] Train new model with fresh Reddit data\n[2] Quick demo with sample texts\nChoice (1 or 2): ").strip()
+        if quick_mode:
+            print("AUTOMATED QUICK DEMO MODE")
+            print("Training new model with live Reddit data...")
+            choice = "1"
+        else:
+            choice = input("\nOptions:\n[1] Train new model with fresh Reddit data\n[2] Quick demo with sample texts\nChoice (1 or 2): ").strip()
         
         if choice == "1":
             print("\nTraining new model with live Reddit data...")
@@ -185,15 +191,22 @@ class InteractiveDemo:
         accuracy = correct_predictions / len(sample_texts)
         print(f"\nSample Demo Accuracy: {accuracy:.1%} ({correct_predictions}/{len(sample_texts)})")
     
-    def run_complete_demo(self):
+    def run_complete_demo(self, quick_mode=False):
         """Run the complete interactive demo."""
         
         # Step 1: Setup model
-        if not self.load_or_train_model():
+        if not self.load_or_train_model(quick_mode):
             print("Could not setup model. Exiting demo.")
             return
         
         print(f"\nModel ready! Categories: {list(self.classifier.label_encoder.classes_)}")
+        
+        if quick_mode:
+            print("\nRUNNING AUTOMATED DEMONSTRATION...")
+            # Run sample text demo automatically
+            self.sample_text_demo()
+            print("\nQUICK DEMO COMPLETED SUCCESSFULLY!")
+            return
         
         while True:
             print("\n" + "="*60)
@@ -217,11 +230,27 @@ class InteractiveDemo:
             else:
                 print("Invalid choice. Please select 1-4.")
 
+def parse_arguments():
+    """Parse command line arguments for different demo modes"""
+    parser = argparse.ArgumentParser(description='Reddit NLP Classifier Demo')
+    parser.add_argument('--quick-demo', action='store_true', 
+                       help='Run automated demo without user interaction')
+    return parser.parse_args()
+
 def main():
-    """Main demo function."""
+    """Main demo function with argument handling"""
+    args = parse_arguments()
     
     demo = InteractiveDemo()
-    demo.run_complete_demo()
+    
+    if args.quick_demo:
+        print("RUNNING AUTOMATED QUICK DEMO")
+        print("=" * 50)
+        # Run automated demo without user input
+        demo.run_complete_demo(quick_mode=True)
+    else:
+        # Run normal interactive demo
+        demo.run_complete_demo()
 
 if __name__ == "__main__":
     main()

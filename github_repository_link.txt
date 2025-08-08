@@ -1,0 +1,33 @@
+GitHub Repository Link - AIE1007 Final Project
+
+Student: Andrea Oquendo Araujo
+Project: Reddit NLP Text Classifier
+Course: Natural Language Processing AIE1007
+
+Repository URL: https://github.com/AndreaCambrian/reddit-nlp-classifier
+
+This repository contains the complete Reddit NLP Classification system 
+achieving 88% accuracy on live social media data.
+
+Project Features:
+- Real-time Reddit API data collection and processing
+- Advanced NLP pipeline with TF-IDF + domain-specific features
+- Random Forest classification with 88% live accuracy
+- Docker multi-service deployment (demo-quick, summary, interactive)
+- Professional containerization for production deployment
+
+Technical Implementation:
+- Live social media data processing (not static datasets)
+- Hybrid feature engineering approach
+- Multi-service Docker architecture with volume mounting
+- Environment variable management for API credentials
+- Interactive demonstration and automated analysis capabilities
+
+Performance Results:
+- Training Accuracy: ~90%
+- Validation Accuracy: ~78%  
+- Live Test Accuracy: ~88%
+
+This project demonstrates professional software engineering practices
+combined with advanced natural language processing techniques for
+real-world social media content classification.

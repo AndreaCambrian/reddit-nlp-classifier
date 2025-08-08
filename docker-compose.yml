@@ -3,41 +3,45 @@ services:
     build: .
     container_name: reddit_nlp_classifier
     environment:
-      - PYTHONPATH=/app
       - PRAW_CLIENT_ID=${PRAW_CLIENT_ID}
       - PRAW_CLIENT_SECRET=${PRAW_CLIENT_SECRET}
       - PRAW_USER_AGENT=${PRAW_USER_AGENT}
+      - PYTHONPATH=/app
     volumes:
-      - ./:/app
-      - ./models:/app/models
+      - ./src:/app/src
       - ./results:/app/results
       - ./data:/app/data
+      - ./models:/app/models
+    command: python interactive_demo.py
     stdin_open: true
     tty: true
-    # Keep the container alive so you can open a shell any time
-    command: ["sleep", "infinity"]
 
-  demo-quick:   # one-click quick demo (no prompts)
+  demo-quick:
     build: .
-    depends_on: [reddit-classifier]
+    container_name: redditproject-demo-quick-1
     environment:
-      - PYTHONPATH=/app
       - PRAW_CLIENT_ID=${PRAW_CLIENT_ID}
       - PRAW_CLIENT_SECRET=${PRAW_CLIENT_SECRET}
       - PRAW_USER_AGENT=${PRAW_USER_AGENT}
+      - PYTHONPATH=/app
     volumes:
-      - ./:/app
-      - ./models:/app/models
+      - ./src:/app/src
       - ./results:/app/results
       - ./data:/app/data
-    command: ["python", "interactive_demo.py", "--quick-demo"]
+      - ./models:/app/models
+    command: python interactive_demo.py --quick-demo
 
-  summary:      # one-click project summary
+  summary:
     build: .
-    depends_on: [reddit-classifier]
+    container_name: redditproject-summary-1
+    environment:
+      - PRAW_CLIENT_ID=${PRAW_CLIENT_ID}
+      - PRAW_CLIENT_SECRET=${PRAW_CLIENT_SECRET}
+      - PRAW_USER_AGENT=${PRAW_USER_AGENT}
+      - PYTHONPATH=/app
     volumes:
-      - ./:/app
+      - ./src:/app/src
       - ./results:/app/results
       - ./data:/app/data
       - ./models:/app/models
-    command: ["python", "project_summary.py", "--save-report"]
+    command: python project_summary.py --save-report
