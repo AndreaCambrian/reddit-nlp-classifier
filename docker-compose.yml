@@ -1,0 +1,43 @@
+services:
+  reddit-classifier:
+    build: .
+    container_name: reddit_nlp_classifier
+    environment:
+      - PYTHONPATH=/app
+      - PRAW_CLIENT_ID=${PRAW_CLIENT_ID}
+      - PRAW_CLIENT_SECRET=${PRAW_CLIENT_SECRET}
+      - PRAW_USER_AGENT=${PRAW_USER_AGENT}
+    volumes:
+      - ./:/app
+      - ./models:/app/models
+      - ./results:/app/results
+      - ./data:/app/data
+    stdin_open: true
+    tty: true
+    # Keep the container alive so you can open a shell any time
+    command: ["sleep", "infinity"]
+
+  demo-quick:   # one-click quick demo (no prompts)
+    build: .
+    depends_on: [reddit-classifier]
+    environment:
+      - PYTHONPATH=/app
+      - PRAW_CLIENT_ID=${PRAW_CLIENT_ID}
+      - PRAW_CLIENT_SECRET=${PRAW_CLIENT_SECRET}
+      - PRAW_USER_AGENT=${PRAW_USER_AGENT}
+    volumes:
+      - ./:/app
+      - ./models:/app/models
+      - ./results:/app/results
+      - ./data:/app/data
+    command: ["python", "interactive_demo.py", "--quick-demo"]
+
+  summary:      # one-click project summary
+    build: .
+    depends_on: [reddit-classifier]
+    volumes:
+      - ./:/app
+      - ./results:/app/results
+      - ./data:/app/data
+      - ./models:/app/models
+    command: ["python", "project_summary.py", "--save-report"]

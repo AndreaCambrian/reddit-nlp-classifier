@@ -1,0 +1,47 @@
+# Exclude unnecessary files from Docker build
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+.coverage
+.env
+.venv/
+venv/
+
+# Data files (will be regenerated)
+*.csv
+*.json
+data/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+docs/
+
+# Reddit Project files
+Dockerfile
+docker-compose.yml
+requirements.txt
+reddit_credentials.py
+live_reddit_improved_classifier.py
+interactive_demo.py
+main.py
+reddit_live_demo.py
+src/

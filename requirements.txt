@@ -1,0 +1,24 @@
+# Reddit NLP Classifier Requirements
+# Andrea Oquendo Araujo - AIE1007
+
+# Core ML/NLP Libraries
+scikit-learn>=1.3.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Reddit API
+praw>=7.7.0
+
+# Text Processing
+nltk>=3.8.0
+
+# Optional: Advanced NLP (if you want to add transformer support later)
+# transformers>=4.30.0
+# torch>=2.0.0
+
+# Development/Demo
+pathlib2>=2.3.7
+
+# Data visualization (if needed)
+matplotlib>=3.7.0
+seaborn>=0.12.0
